@@ -1,41 +1,240 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- ============== METADATOS Y TÍTULO ============== -->
+    <!-- Define la codificación de caracteres, la vista para dispositivos móviles y el título de la página -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Las Palancas - Aprende Jugando</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Las Palancas - Estilo Tecnolog-IA</title>
+
+    <!-- ============== IMPORTACIÓN DE FUENTES (GOOGLE FONTS) ============== -->
+    <!-- Se importan las fuentes 'Bungee Inline' para títulos y 'Special Elite' para el texto, según la guía de estilo. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Special+Elite&display=swap" rel="stylesheet">
+    
+    <!-- ============== ESTILOS CSS PERSONALIZADOS - GUÍA "TECNOLOG-IA" ============== -->
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            <h1>¡Hola desde mi computadora local!</h1>
+        /* --- VARIABLES CSS (PALETA DE COLORES Y FUENTES) --- */
+        /* Definir variables nos permite reutilizar los valores y hacer cambios fácilmente. */
+        :root {
+            --font-title: 'Bungee Inline', cursive;
+            --font-body: 'Special Elite', monospace;
+
+            --color-bg-main: #FDF6E3;      /* "Papel Envejecido" */
+            --color-bg-box: #F5EFE0;       /* "Cartón Reciclado" */
+            --color-accent: #D9534F;       /* "Rojo Tinta de Sello" */
+            --color-primary: #2A3B49;      /* "Azul Pizarra" */
+            --color-text: #333333;
         }
+
+        /* --- ESTILOS GENERALES Y DEL CUERPO (BODY) --- */
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg-main);
+            color: var(--color-text);
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        /* Estilo para la "caja" que contiene toda la página. */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--color-bg-box);
+            border: 3px solid var(--color-primary);
+            padding: 2rem;
+            box-shadow: 5px 5px 0px 0px rgba(42,59,73,0.3); /* Sombra sutil, no flotante */
+            border-radius: 0; /* Sin esquinas redondeadas */
+        }
+
+        /* --- TIPOGRAFÍA Y TÍTULOS --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: normal; /* La fuente ya tiene mucho peso visual */
+        }
+
+        h1 {
+            font-family: var(--font-title);
+            font-size: 2.8rem;
+            text-align: center;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding-bottom: 1rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 3px dotted var(--color-accent);
+        }
+
+        h2 {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            text-align: center;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--color-accent);
+        }
+
+        h3 {
+            font-family: var(--font-body);
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+        
+        p, ul {
+            margin-bottom: 1rem;
+            font-size: 17px;
+        }
+
+        ul {
+            list-style-type: '» ';
+            padding-left: 1.5rem;
+        }
+
+        strong, b {
+            font-weight: bold;
+            color: var(--color-primary);
+        }
+
+        /* --- PESTAÑAS DE NAVEGACIÓN --- */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 3px solid var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            border-bottom: 3px solid transparent; /* Espacio para el borde activo */
+            margin-bottom: -3px; /* Alinea el borde con el contenedor */
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            transition: color 0.2s, border-color 0.2s;
+            border-radius: 0;
+        }
+        
+        .tab-button:hover {
+            color: var(--color-accent);
+        }
+
+        .tab-button.active-tab {
+            color: var(--color-accent);
+            border-bottom-color: var(--color-accent);
+        }
+
+        /* --- CONTENIDO DE LAS PESTAÑAS --- */
         .tab-content {
             display: none;
         }
         .tab-content.active {
             display: block;
         }
-        .quiz-option:hover {
-            transform: scale(1.05);
+
+        /* --- BOTONES --- */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--color-primary);
+            color: var(--color-bg-main);
+            border: 2px solid var(--color-primary);
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 0;
+            margin-top: 1rem;
         }
-        /* Estilos para los diagramas de palancas */
+        
+        .btn:hover {
+            background-color: var(--color-accent);
+            border-color: var(--color-accent);
+        }
+
+        /* --- FORMULARIOS (CALCULADORA) --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Una columna por defecto */
+            gap: 1rem;
+        }
+        @media (min-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr 1fr; /* Dos columnas en pantallas más grandes */
+            }
+        }
+        .form-grid label {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+        .form-grid input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--color-primary);
+            background-color: var(--color-bg-main);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            border-radius: 0;
+        }
+
+        #resultadoCalculadora {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 1rem;
+            border: 2px dashed;
+        }
+
+        /* --- SECCIÓN DE TIPOS DE PALANCA (TARJETAS) --- */
+        .types-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Una columna por defecto */
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .types-grid {
+                grid-template-columns: repeat(3, 1fr); /* Tres columnas en pantallas grandes */
+            }
+        }
+        .type-card {
+            background-color: var(--color-bg-main);
+            border: 2px solid var(--color-primary);
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 4px 4px 0px 0px rgba(42,59,73,0.3);
+        }
+
+        /* --- ESTILOS PARA LOS DIAGRAMAS DE PALANCAS (ADAPTADOS) --- */
         .lever-diagram {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 1rem 0;
             padding: 1rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.5rem;
-            background-color: #f9fafb;
+            border: 1px solid var(--color-primary);
+            background-color: #fdfdfd; /* Un fondo casi blanco para que resalte */
         }
         .lever-bar {
-            width: 80%;
+            width: 90%;
             height: 10px;
-            background-color: #4a5568;
+            background-color: var(--color-primary); /* Azul Pizarra */
             position: relative;
-            border-radius: 5px;
             margin-bottom: 10px;
         }
         .fulcrum {
@@ -43,312 +242,322 @@
             height: 0;
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
-            border-bottom: 20px solid #718096; /* Color del fulcro */
+            border-bottom: 20px solid var(--color-primary); /* Azul Pizarra */
             position: absolute;
-            bottom: -10px; /* Ajusta para que el vértice toque la barra */
+            bottom: -10px;
         }
-        .force, .resistance, .effort-point { /* Renombrado effort a effort-point para evitar confusión */
+        .force, .resistance, .effort-point {
             position: absolute;
-            bottom: 15px; /* Encima de la barra */
+            bottom: 15px;
             text-align: center;
             font-size: 0.9em;
             font-weight: bold;
         }
-        .force span, .resistance span, .effort-point span {
-            display: block;
-        }
-        .force { color: #2c5282; } /* Azul para Potencia (Fuerza) */
-        .resistance { color: #c53030; } /* Rojo para Resistencia */
-        .effort-point { color: #2f855a; } /* Verde para Esfuerzo (Potencia aplicada) */
+        .force { color: var(--color-primary); }
+        .resistance { color: var(--color-accent); } /* Rojo Tinta de Sello */
+        .effort-point { color: #006400; } /* Un verde oscuro para Potencia aplicada */
 
-        /* Posicionamiento específico para cada tipo de palanca */
+        /* Posicionamiento específico */
         .first-kind .fulcrum { left: 50%; transform: translateX(-50%); }
         .first-kind .effort-point { left: 15%; transform: translateX(-50%); }
         .first-kind .resistance { right: 15%; transform: translateX(50%); }
-
         .second-kind .fulcrum { left: 5%; transform: translateX(-50%); }
         .second-kind .resistance { left: 50%; transform: translateX(-50%); }
         .second-kind .effort-point { right: 5%; transform: translateX(50%); }
-
         .third-kind .fulcrum { left: 5%; transform: translateX(-50%); }
         .third-kind .effort-point { left: 50%; transform: translateX(-50%); }
         .third-kind .resistance { right: 5%; transform: translateX(50%); }
 
         .arrow-down {
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 12px solid currentColor; /* Hereda el color del texto */
+            width: 0; height: 0; border-left: 8px solid transparent;
+            border-right: 8px solid transparent; border-top: 12px solid currentColor;
             margin: 0 auto 2px;
+        }
+
+        /* --- CORRECCIÓN DE ETIQUETAS DEL DIAGRAMA --- */
+        .diagram-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            font-size: 0.8rem;
+            color: #555;
+            font-weight: bold;
+            text-align: center;
+            padding: 0 5%;
+        }
+        .diagram-labels span {
+            flex: 1;
+        }
+        .diagram-labels .label-center { text-align: center; }
+        .diagram-labels .label-right { text-align: right; }
+        .diagram-labels .label-left { text-align: left; }
+
+        /* --- ESTILOS PARA EL QUIZ --- */
+        #quizContainer .quiz-question {
+            background-color: white;
+            border: 2px solid var(--color-primary);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        #quizContainer .quiz-options label {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #quizContainer .quiz-options label:hover {
+            background-color: var(--color-bg-box);
+        }
+        #quizContainer .quiz-options input[type="radio"] {
+            margin-right: 1rem;
+        }
+        .feedback {
+            margin-top: 1rem;
+            font-weight: bold;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-sky-100 to-blue-200 text-gray-800 p-4 md:p-8 min-h-screen">
+<body>
 
-    <div class="container mx-auto max-w-4xl bg-white shadow-2xl rounded-xl p-6 md:p-10">
+    <!-- ============== CONTENEDOR PRINCIPAL DE LA PÁGINA ============== -->
+    <div class="container">
 
-        <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-sky-700 mb-2">¡Descubre el Mundo de las Palancas!</h1>
-            <p class="text-lg text-gray-600">Una herramienta simple pero poderosa que usamos todos los días.</p>
+        <!-- ============== CABECERA ============== -->
+        <header>
+            <h1>¡Descubre el Mundo de las Palancas!</h1>
+            <p style="text-align:center;">Una herramienta simple pero poderosa que usamos todos los días.</p>
         </header>
 
-        <div class="mb-6 border-b border-gray-300">
-            <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
-                <button onclick="showTab('introduccion')" class="tab-button active-tab group inline-flex items-center justify-center p-4 border-b-2 border-sky-500 text-sky-600 font-semibold" aria-current="page">
-                    Introducción
-                </button>
-                <button onclick="showTab('tipos')" class="tab-button group inline-flex items-center justify-center p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 font-semibold">
-                    Tipos de Palancas
-                </button>
-                <button onclick="showTab('ley')" class="tab-button group inline-flex items-center justify-center p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 font-semibold">
-                    Ley de la Palanca
-                </button>
-                <button onclick="showTab('quiz')" class="tab-button group inline-flex items-center justify-center p-4 border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 font-semibold">
-                    ¡Ponte a Prueba!
-                </button>
-            </nav>
-        </div>
+        <!-- ============== NAVEGACIÓN POR PESTAÑAS ============== -->
+        <nav class="tabs-nav" aria-label="Tabs">
+            <button onclick="showTab('introduccion')" class="tab-button">Introducción</button>
+            <button onclick="showTab('tipos')" class="tab-button">Tipos de Palancas</button>
+            <button onclick="showTab('ley')" class="tab-button">Ley de la Palanca</button>
+            <button onclick="showTab('quiz')" class="tab-button">¡Ponte a Prueba!</button>
+        </nav>
 
-        <div id="introduccion" class="tab-content active p-2">
-            <h2 class="text-2xl font-semibold text-sky-600 mb-4">¿Qué es una Palanca?</h2>
-            <p class="mb-3 leading-relaxed">Una palanca es una máquina simple que consiste en una barra rígida que puede girar alrededor de un punto fijo llamado <strong>fulcro</strong> o <strong>punto de apoyo (A)</strong>.</p>
-            <p class="mb-3 leading-relaxed">Sobre la palanca actúan dos fuerzas principales:</p>
-            <ul class="list-disc list-inside mb-3 pl-4 space-y-1">
+        <!-- ============== PESTAÑA 1: INTRODUCCIÓN ============== -->
+        <div id="introduccion" class="tab-content">
+            <h2>¿Qué es una Palanca?</h2>
+            <p>Una palanca es una máquina simple que consiste en una barra rígida que puede girar alrededor de un punto fijo llamado <strong>fulcro</strong> o <strong>punto de apoyo (A)</strong>.</p>
+            <p>Sobre la palanca actúan dos fuerzas principales:</p>
+            <ul>
                 <li><strong>Potencia (P):</strong> Es la fuerza que aplicamos para vencer la resistencia.</li>
                 <li><strong>Resistencia (R):</strong> Es la fuerza que queremos vencer o el peso que queremos mover.</li>
             </ul>
-            <p class="leading-relaxed">Las palancas nos ayudan a levantar objetos pesados, mover cosas o aplicar fuerza con menos esfuerzo. ¡Están por todas partes!</p>
-            
-            <svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" class="mt-4 rounded-lg shadow-md mx-auto bg-sky-50 border">
-              <style>
-                .label { font: bold 24px sans-serif; }
-                .label-small { font: 20px sans-serif; }
-                .arrow-head { fill: none; stroke-linejoin: round; stroke-linecap: round; }
-              </style>
-              <rect x="50" y="150" width="500" height="15" fill="#4a5568" rx="5"/>
-              <path d="M 300 165 L 280 205 L 320 205 Z" fill="#718096"/>
-              <text x="295" y="230" class="label-small">A</text>
-              <g stroke="#2c5282" stroke-width="4">
-                <line x1="150" y1="80" x2="150" y2="145" />
-                <path d="M 140 130 L 150 145 L 160 130 Z" class="arrow-head" stroke-width="8" fill="#2c5282"/>
-              </g>
-              <text x="145" y="65" class="label" fill="#2c5282">P</text>
-              <text x="90" y="30" class="label-small" fill="#2c5282">(Potencia)</text>
-              <g stroke="#c53030" stroke-width="4">
-                <line x1="450" y1="80" x2="450" y2="145" />
-                <path d="M 440 130 L 450 145 L 460 130 Z" class="arrow-head" stroke-width="8" fill="#c53030"/>
-              </g>
-              <text x="445" y="65" class="label" fill="#c53030">R</text>
-              <text x="390" y="30" class="label-small" fill="#c53030">(Resistencia)</text>
-            </svg>
+            <p>Las palancas nos ayudan a levantar objetos pesados, mover cosas o aplicar fuerza con menos esfuerzo. ¡Están por todas partes!</p>
         </div>
 
-        <div id="tipos" class="tab-content p-2">
-            <h2 class="text-2xl font-semibold text-sky-600 mb-6 text-center">Tipos de Palancas</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-sky-50 p-5 rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <h3 class="text-xl font-bold text-sky-700 mb-2">1. Primer Género (Interapoyante)</h3>
-                    <p class="text-sm mb-3">El <strong>fulcro (A)</strong> se encuentra entre la <strong>potencia (P)</strong> y la <strong>resistencia (R)</strong>.</p>
+        <!-- ============== PESTAÑA 2: TIPOS DE PALANCAS ============== -->
+        <div id="tipos" class="tab-content">
+            <h2>Tipos de Palancas</h2>
+            <div class="types-grid">
+                <!-- Tarjeta para Palancas de Primer Género -->
+                <div class="type-card">
+                    <h3>1. Primer Género</h3>
+                    <p>El <strong>apoyo (A)</strong> se encuentra entre la <strong>potencia (P)</strong> y la <strong>resistencia (R)</strong>.</p>
                     <div class="lever-diagram first-kind">
                         <div class="lever-bar">
                             <div class="effort-point"><span>P</span><div class="arrow-down"></div></div>
                             <div class="fulcrum"></div>
                             <div class="resistance"><span>R</span><div class="arrow-down"></div></div>
                         </div>
-                        <div class="text-xs text-gray-500 mt-2">A (Fulcro)</div>
+                        <div class="diagram-labels">
+                            <span class="label-left"></span>
+                            <span class="label-center">A (Apoyo)</span>
+                            <span class="label-right"></span>
+                        </div>
                     </div>
-                    <p class="text-sm font-semibold mt-3">Ejemplos:</p>
-                    <ul class="list-disc list-inside text-sm pl-4">
-                        <li>Balancín</li>
-                        <li>Tijeras</li>
-                        <li>Alicates</li>
-                        <li>Pata de cabra</li>
-                    </ul>
+                    <p><strong>Ejemplos:</strong> Balancín, tijeras, alicates.</p>
                 </div>
 
-                <div class="bg-green-50 p-5 rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <h3 class="text-xl font-bold text-green-700 mb-2">2. Segundo Género (Interresistente)</h3>
-                    <p class="text-sm mb-3">La <strong>resistencia (R)</strong> se encuentra entre el <strong>fulcro (A)</strong> y la <strong>potencia (P)</strong>.</p>
+                <!-- Tarjeta para Palancas de Segundo Género -->
+                <div class="type-card">
+                    <h3>2. Segundo Género</h3>
+                    <p>La <strong>resistencia (R)</strong> se encuentra entre el <strong>apoyo (A)</strong> y la <strong>potencia (P)</strong>.</p>
                      <div class="lever-diagram second-kind">
                         <div class="lever-bar">
                             <div class="fulcrum"></div>
                             <div class="resistance"><span>R</span><div class="arrow-down"></div></div>
+                            <!-- La flecha de potencia apunta hacia arriba en este caso -->
                             <div class="effort-point"><span>P</span><div class="arrow-down" style="border-top-color: transparent; border-bottom: 12px solid currentColor;"></div></div>
                         </div>
-                         <div class="text-xs text-gray-500 mt-2">A (Fulcro) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
+                        <!-- ETIQUETAS CORREGIDAS: Muestran la posición de cada elemento -->
+                         <div class="diagram-labels">
+                            <span class="label-left">A (Apoyo)</span>
+                            <span class="label-center">R (Resistencia)</span>
+                            <span class="label-right">P (Potencia)</span>
+                        </div>
                     </div>
-                    <p class="text-sm font-semibold mt-3">Ejemplos:</p>
-                    <ul class="list-disc list-inside text-sm pl-4">
-                        <li>Carretilla</li>
-                        <li>Cascanueces</li>
-                        <li>Abrebotellas (de chapa)</li>
-                    </ul>
+                    <p><strong>Ejemplos:</strong> Carretilla, cascanueces, abrebotellas.</p>
                 </div>
 
-                <div class="bg-amber-50 p-5 rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <h3 class="text-xl font-bold text-amber-700 mb-2">3. Tercer Género (Interpotente)</h3>
-                    <p class="text-sm mb-3">La <strong>potencia (P)</strong> se encuentra entre el <strong>fulcro (A)</strong> y la <strong>resistencia (R)</strong>.</p>
+                <!-- Tarjeta para Palancas de Tercer Género -->
+                <div class="type-card">
+                    <h3>3. Tercer Género</h3>
+                    <p>La <strong>potencia (P)</strong> se encuentra entre el <strong>apoyo (A)</strong> y la <strong>resistencia (R)</strong>.</p>
                     <div class="lever-diagram third-kind">
                         <div class="lever-bar">
                             <div class="fulcrum"></div>
+                             <!-- La flecha de potencia apunta hacia arriba en este caso -->
                             <div class="effort-point"><span>P</span><div class="arrow-down" style="border-top-color: transparent; border-bottom: 12px solid currentColor;"></div></div>
                             <div class="resistance"><span>R</span><div class="arrow-down"></div></div>
                         </div>
-                        <div class="text-xs text-gray-500 mt-2">A (Fulcro) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
+                        <!-- ETIQUETAS CORREGIDAS: Muestran la posición de cada elemento -->
+                        <div class="diagram-labels">
+                           <span class="label-left">A (Apoyo)</span>
+                           <span class="label-center">P (Potencia)</span>
+                           <span class="label-right">R (Resistencia)</span>
+                       </div>
                     </div>
-                    <p class="text-sm font-semibold mt-3">Ejemplos:</p>
-                    <ul class="list-disc list-inside text-sm pl-4">
-                        <li>Pinzas de depilar</li>
-                        <li>Caña de pescar</li>
-                        <li>Grapadora (algunas partes)</li>
-                        <li>Brazo humano (codo como fulcro)</li>
-                    </ul>
+                    <p><strong>Ejemplos:</strong> Pinzas, caña de pescar, brazo humano.</p>
                 </div>
             </div>
         </div>
 
-        <div id="ley" class="tab-content p-2">
-            <h2 class="text-2xl font-semibold text-sky-600 mb-4">La Ley de la Palanca</h2>
-            <p class="mb-3 leading-relaxed">Para que una palanca esté en equilibrio, se debe cumplir la siguiente igualdad:</p>
-            <p class="text-center text-xl font-mono bg-gray-100 p-4 rounded-md my-4">
-                Potencia (P) × Brazo de Potencia (BP) = Resistencia (R) × Brazo de Resistencia (BR)
+        <!-- ============== PESTAÑA 3: LEY DE LA PALANCA ============== -->
+        <div id="ley" class="tab-content">
+            <h2>La Ley de la Palanca</h2>
+            <p>Para que una palanca esté en equilibrio, se debe cumplir que el producto de la potencia por su distancia al apoyo sea igual al producto de la resistencia por su distancia al apoyo.</p>
+            <p style="text-align: center; font-size: 1.2rem; background: white; padding: 1rem; border: 1px solid var(--color-primary);">
+                <b>P × BP = R × BR</b>
             </p>
-            <p class="mb-3 leading-relaxed">Donde:</p>
-            <ul class="list-disc list-inside mb-3 pl-4 space-y-1">
-                <li><strong>Brazo de Potencia (BP):</strong> Distancia desde el fulcro hasta el punto donde se aplica la potencia.</li>
-                <li><strong>Brazo de Resistencia (BR):</strong> Distancia desde el fulcro hasta el punto donde se encuentra la resistencia.</li>
+            <ul>
+                <li><b>Brazo de Potencia (BP):</b> Distancia desde el apoyo hasta donde se aplica la potencia.</li>
+                <li><b>Brazo de Resistencia (BR):</b> Distancia desde el apoyo hasta la resistencia.</li>
             </ul>
             
-            <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" class="mt-4 rounded-lg shadow-md mx-auto mb-6 bg-sky-50 border">
-              <style>
-                .label { font: bold 24px sans-serif; }
-                .label-small { font: 20px sans-serif; }
-                .dim-line { stroke: #1a202c; stroke-width: 1.5; stroke-dasharray: 5, 5; }
-                .dim-text { font: italic 18px sans-serif; fill: #1a202c; text-anchor: middle; }
-              </style>
-              <rect x="50" y="150" width="500" height="15" fill="#4a5568" rx="5"/>
-              <path d="M 300 165 L 280 205 L 320 205 Z" fill="#718096"/>
-              <line x1="300" y1="165" x2="300" y2="240" stroke="#718096" stroke-width="1.5" stroke-dasharray="2,2"/>
-              <text x="295" y="260" class="label-small">A</text>
-              <g stroke="#2c5282" stroke-width="3">
-                <line x1="120" y1="100" x2="120" y2="145" />
-                <path d="M 112 133 L 120 148 L 128 133 Z" fill="#2c5282"/>
-              </g>
-              <text x="115" y="90" class="label" fill="#2c5282">P</text>
-              <line x1="120" y1="158" x2="120" y2="180" stroke="#2c5282" stroke-width="1.5" stroke-dasharray="2,2"/>
-              <rect x="430" y="125" width="40" height="25" fill="#c53030" />
-              <text x="445" y="115" class="label" fill="#c53030">R</text>
-              <line x1="450" y1="158" x2="450" y2="180" stroke="#c53030" stroke-width="1.5" stroke-dasharray="2,2"/>
-              <line x1="120" y1="190" x2="300" y2="190" class="dim-line"/>
-              <text x="210" y="215" class="dim-text">Brazo de Potencia (BP)</text>
-              <line x1="300" y1="190" x2="450" y2="190" class="dim-line"/>
-              <text x="375" y="215" class="dim-text">Brazo de Resistencia (BR)</text>
-            </svg>
-
-            <h3 class="text-xl font-semibold text-sky-500 mb-3">Calculadora de la Ley de la Palanca</h3>
-            <div class="bg-sky-50 p-6 rounded-lg shadow">
-                <p class="text-sm mb-4">Introduce tres valores para calcular el cuarto y equilibrar la palanca.</p>
-                <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <h3>Calculadora de la Ley</h3>
+            <div style="background-color: var(--color-bg-main); padding: 1.5rem; border:2px solid var(--color-primary);">
+                <p>Introduce tres valores para calcular el cuarto y equilibrar la palanca.</p>
+                <div class="form-grid">
                     <div>
-                        <label for="potencia" class="block text-sm font-medium text-gray-700">Potencia (P) en Newtons (N):</label>
-                        <input type="number" id="potencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2">
+                        <label for="potencia">Potencia (P) en Newtons (N):</label>
+                        <input type="number" id="potencia">
                     </div>
                     <div>
-                        <label for="brazoPotencia" class="block text-sm font-medium text-gray-700">Brazo de Potencia (BP) en metros (m):</label>
-                        <input type="number" id="brazoPotencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2">
+                        <label for="brazoPotencia">Brazo de Potencia (BP) en metros (m):</label>
+                        <input type="number" id="brazoPotencia">
                     </div>
                     <div>
-                        <label for="resistencia" class="block text-sm font-medium text-gray-700">Resistencia (R) en Newtons (N):</label>
-                        <input type="number" id="resistencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2">
+                        <label for="resistencia">Resistencia (R) en Newtons (N):</label>
+                        <input type="number" id="resistencia">
                     </div>
                     <div>
-                        <label for="brazoResistencia" class="block text-sm font-medium text-gray-700">Brazo de Resistencia (BR) en metros (m):</label>
-                        <input type="number" id="brazoResistencia" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2">
+                        <label for="brazoResistencia">Brazo de Resistencia (BR) en metros (m):</label>
+                        <input type="number" id="brazoResistencia">
                     </div>
                 </div>
-                <button onclick="calcularLeyPalanca()" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-md transition duration-150 ease-in-out">
-                    Calcular Valor Faltante
-                </button>
-                <p id="resultadoCalculadora" class="mt-4 text-center font-semibold text-lg"></p>
+                <button onclick="calcularLeyPalanca()" class="btn">Calcular Valor Faltante</button>
+                <p id="resultadoCalculadora"></p>
             </div>
         </div>
 
-        <div id="quiz" class="tab-content p-2">
-            <h2 class="text-2xl font-semibold text-sky-600 mb-6">¡Ponte a Prueba! Quiz sobre Palancas</h2>
-            <div id="quizContainer" class="space-y-8">
-                </div>
-            <div id="quizResult" class="mt-6 text-center text-xl font-semibold"></div>
-            <button id="submitQuizButton" onclick="mostrarResultadosQuiz()" class="mt-6 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-150 ease-in-out text-lg">
+        <!-- ============== PESTAÑA 4: QUIZ INTERACTIVO ============== -->
+        <div id="quiz" class="tab-content">
+            <h2>¡Ponte a Prueba!</h2>
+            <div id="quizContainer">
+                <!-- El contenido del quiz se generará con JavaScript -->
+            </div>
+            <div id="quizResult" style="text-align:center; font-size: 1.3rem; margin-top: 1.5rem;"></div>
+            <button id="submitQuizButton" onclick="mostrarResultadosQuiz()" class="btn">
                 Ver Resultados
             </button>
         </div>
 
-        <footer class="text-center mt-10 pt-6 border-t border-gray-300">
-            <p class="text-sm text-gray-500">&copy; 2024 Aprende Palancas. ¡Diviértete aprendiendo!</p>
+        <!-- ============== PIE DE PÁGINA ============== -->
+        <footer style="text-align:center; margin-top: 2rem; padding-top: 1rem; border-top: 2px solid var(--color-primary);">
+            <p>© 2024 Aprende Palancas. ¡Diviértete aprendiendo!</p>
         </footer>
     </div>
 
+    <!-- ============== SCRIPT DE JAVASCRIPT ============== -->
     <script>
-        // Lógica para las pestañas
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
-
+        // --- LÓGICA PARA LAS PESTAÑAS ---
+        
+        /**
+         * Función para mostrar una pestaña específica y ocultar las demás.
+         * También actualiza el estilo del botón de la pestaña activa.
+         * @param {string} tabId - El ID del div de contenido de la pestaña a mostrar.
+         */
         function showTab(tabId) {
+            // Obtener todos los botones y contenidos de las pestañas
+            const tabContents = document.querySelectorAll('.tab-content');
+            const tabButtons = document.querySelectorAll('.tab-button');
+
+            // Ocultar todos los contenidos de las pestañas
             tabContents.forEach(content => {
                 content.classList.remove('active');
             });
+            // Quitar el estilo activo de todos los botones
             tabButtons.forEach(button => {
-                button.classList.remove('active-tab', 'border-sky-500', 'text-sky-600');
-                button.classList.add('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
+                button.classList.remove('active-tab');
             });
 
+            // Mostrar el contenido de la pestaña seleccionada
             document.getElementById(tabId).classList.add('active');
+            // Añadir el estilo activo al botón correspondiente
             const activeButton = document.querySelector(`button[onclick="showTab('${tabId}')"]`);
-            activeButton.classList.add('active-tab', 'border-sky-500', 'text-sky-600');
-            activeButton.classList.remove('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
+            activeButton.classList.add('active-tab');
         }
         
-        // Inicializar la primera pestaña
+        // Al cargar la página, mostrar la primera pestaña por defecto.
         showTab('introduccion');
 
-        // Lógica para la calculadora de la Ley de la Palanca
+        // --- LÓGICA PARA LA CALCULADORA DE LA LEY DE LA PALANCA ---
+        
+        /**
+         * Calcula el valor faltante (P, BP, R o BR) en la fórmula de la palanca.
+         * Requiere que exactamente tres de los cuatro campos estén llenos.
+         */
         function calcularLeyPalanca() {
+            // Obtener los valores de los inputs y convertirlos a número (o NaN si están vacíos)
             const P = parseFloat(document.getElementById('potencia').value);
             const BP = parseFloat(document.getElementById('brazoPotencia').value);
             const R = parseFloat(document.getElementById('resistencia').value);
             const BR = parseFloat(document.getElementById('brazoResistencia').value);
-            const resultadoP = document.getElementById('resultadoCalculadora');
+            const resultadoEl = document.getElementById('resultadoCalculadora');
 
-            let count = 0;
-            if (!isNaN(P)) count++;
-            if (!isNaN(BP)) count++;
-            if (!isNaN(R)) count++;
-            if (!isNaN(BR)) count++;
+            // Contar cuántos campos tienen un valor numérico válido
+            let count = [P, BP, R, BR].filter(val => !isNaN(val)).length;
 
+            // Validar que se hayan introducido exactamente 3 valores
             if (count !== 3) {
-                resultadoP.textContent = 'Por favor, introduce exactamente tres valores.';
-                resultadoP.className = 'mt-4 text-center font-semibold text-lg text-red-600';
+                resultadoEl.textContent = 'Por favor, introduce exactamente tres valores.';
+                resultadoEl.style.color = 'var(--color-accent)'; // Rojo para error
+                resultadoEl.style.borderColor = 'var(--color-accent)';
                 return;
             }
 
-            resultadoP.className = 'mt-4 text-center font-semibold text-lg text-green-700';
+            // Si la validación es correcta, preparar el mensaje de éxito
+            resultadoEl.style.color = 'var(--color-primary)'; // Azul para éxito
+            resultadoEl.style.borderColor = 'var(--color-primary)';
+            
+            // Calcular el valor faltante basándose en cuál campo está vacío (isNaN)
             if (isNaN(P)) {
-                document.getElementById('potencia').value = ((R * BR) / BP).toFixed(2);
-                resultadoP.textContent = `La Potencia (P) necesaria es ${((R * BR) / BP).toFixed(2)} N.`;
+                const result = (R * BR) / BP;
+                document.getElementById('potencia').value = result.toFixed(2);
+                resultadoEl.textContent = `La Potencia (P) necesaria es ${result.toFixed(2)} N.`;
             } else if (isNaN(BP)) {
-                document.getElementById('brazoPotencia').value = ((R * BR) / P).toFixed(2);
-                resultadoP.textContent = `El Brazo de Potencia (BP) necesario es ${((R * BR) / P).toFixed(2)} m.`;
+                const result = (R * BR) / P;
+                document.getElementById('brazoPotencia').value = result.toFixed(2);
+                resultadoEl.textContent = `El Brazo de Potencia (BP) es ${result.toFixed(2)} m.`;
             } else if (isNaN(R)) {
-                document.getElementById('resistencia').value = ((P * BP) / BR).toFixed(2);
-                resultadoP.textContent = `La Resistencia (R) que se puede vencer es ${((P * BP) / BR).toFixed(2)} N.`;
+                const result = (P * BP) / BR;
+                document.getElementById('resistencia').value = result.toFixed(2);
+                resultadoEl.textContent = `La Resistencia (R) que se vence es ${result.toFixed(2)} N.`;
             } else if (isNaN(BR)) {
-                document.getElementById('brazoResistencia').value = ((P * BP) / R).toFixed(2);
-                resultadoP.textContent = `El Brazo de Resistencia (BR) necesario es ${((P * BP) / R).toFixed(2)} m.`;
+                const result = (P * BP) / R;
+                document.getElementById('brazoResistencia').value = result.toFixed(2);
+                resultadoEl.textContent = `El Brazo de Resistencia (BR) es ${result.toFixed(2)} m.`;
             }
         }
 
-        // Lógica para el Quiz
+        // --- LÓGICA PARA EL QUIZ ---
+        // Datos de las preguntas del quiz
         const quizData = [
             {
                 question: "¿Qué tipo de palanca es un balancín de parque?",
@@ -356,9 +565,9 @@
                 answer: "Primer Género"
             },
             {
-                question: "En una carretilla, ¿dónde se encuentra la Resistencia (R)?",
-                options: ["Entre el Fulcro y la Potencia", "En el extremo donde está el Fulcro", "En el extremo donde se aplica la Potencia", "No hay Resistencia"],
-                answer: "Entre el Fulcro y la Potencia"
+                question: "En una carretilla, ¿qué elemento está entre los otros dos?",
+                options: ["El Apoyo (la rueda)", "La Potencia (las manos)", "La Resistencia (la carga)", "Ninguno"],
+                answer: "La Resistencia (la carga)"
             },
             {
                 question: "Si P=10N, BP=2m, R=20N, ¿cuánto debe ser BR para equilibrar la palanca?",
@@ -367,12 +576,12 @@
             },
             {
                 question: "Las pinzas para coger hielo son un ejemplo de palanca de:",
-                options: ["Primer Género", "Segundo Género", "Tercer Género", "Cuarto Género"],
+                options: ["Primer Género", "Segundo Género", "Tercer Género", "No son una palanca"],
                 answer: "Tercer Género"
             },
             {
                 question: "En las palancas de SEGUNDO género, el Brazo de Potencia (BP) es siempre...",
-                options: ["Menor que el Brazo de Resistencia (BR)", "Igual que el Brazo de Resistencia (BR)", "Mayor que el Brazo de Resistencia (BR)", "Depende de la fuerza aplicada"],
+                options: ["Menor que el Brazo de Resistencia (BR)", "Igual que el Brazo de Resistencia (BR)", "Mayor que el Brazo de Resistencia (BR)"],
                 answer: "Mayor que el Brazo de Resistencia (BR)"
             }
         ];
@@ -380,83 +589,84 @@
         const quizContainer = document.getElementById('quizContainer');
         const quizResult = document.getElementById('quizResult');
 
+        /**
+         * Genera dinámicamente el HTML para las preguntas del quiz
+         * a partir del array 'quizData'.
+         */
         function cargarQuiz() {
-            quizContainer.innerHTML = ''; // Limpiar preguntas anteriores si se recarga
+            quizContainer.innerHTML = ''; // Limpiar por si se recarga
             quizData.forEach((q, index) => {
+                // Crear el contenedor para cada pregunta
                 const questionElement = document.createElement('div');
-                questionElement.className = 'bg-white p-6 rounded-lg shadow-lg border border-gray-200';
+                questionElement.className = 'quiz-question';
                 
-                const questionTitle = document.createElement('p');
-                questionTitle.className = 'text-lg font-semibold text-gray-700 mb-4';
-                questionTitle.textContent = `${index + 1}. ${q.question}`;
-                questionElement.appendChild(questionTitle);
+                // Añadir el texto de la pregunta
+                questionElement.innerHTML = `<p><strong>${index + 1}. ${q.question}</strong></p>`;
 
+                // Crear el contenedor para las opciones
                 const optionsContainer = document.createElement('div');
-                optionsContainer.className = 'space-y-3';
+                optionsContainer.className = 'quiz-options';
 
+                // Crear los botones de radio para cada opción
                 q.options.forEach(option => {
-                    const optionLabel = document.createElement('label');
-                    optionLabel.className = 'flex items-center p-3 rounded-md border border-gray-300 hover:bg-sky-50 transition-colors cursor-pointer quiz-option';
-                    
-                    const radioButton = document.createElement('input');
-                    radioButton.type = 'radio';
-                    radioButton.name = `question${index}`;
-                    radioButton.value = option;
-                    radioButton.className = 'h-5 w-5 text-sky-600 focus:ring-sky-500 border-gray-300 mr-3';
-                    
-                    const optionText = document.createElement('span');
-                    optionText.textContent = option;
-                    optionText.className = 'text-gray-700';
-
-                    optionLabel.appendChild(radioButton);
-                    optionLabel.appendChild(optionText);
-                    optionsContainer.appendChild(optionLabel);
+                    optionsContainer.innerHTML += `
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}">
+                            <span>${option}</span>
+                        </label>
+                    `;
                 });
-
+                
                 questionElement.appendChild(optionsContainer);
+                
+                // Añadir un elemento para mostrar la retroalimentación (correcto/incorrecto)
                 const feedbackElement = document.createElement('p');
                 feedbackElement.id = `feedback${index}`;
-                feedbackElement.className = 'mt-3 text-sm font-medium';
+                feedbackElement.className = 'feedback'; // Clase para estilo
                 questionElement.appendChild(feedbackElement);
 
                 quizContainer.appendChild(questionElement);
             });
         }
 
+        /**
+         * Revisa las respuestas del quiz, muestra la retroalimentación para cada pregunta
+         * y calcula la puntuación final.
+         */
         function mostrarResultadosQuiz() {
             let score = 0;
             quizData.forEach((q, index) => {
-                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
                 const feedbackElement = document.getElementById(`feedback${index}`);
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
                 
                 if (selectedOption) {
+                    // Si la respuesta es correcta
                     if (selectedOption.value === q.answer) {
                         score++;
                         feedbackElement.textContent = "¡Correcto! 👍";
-                        feedbackElement.className = 'mt-3 text-sm font-medium text-green-600';
-                    } else {
-                        feedbackElement.textContent = `Incorrecto. La respuesta correcta es: ${q.answer}.`;
-                        feedbackElement.className = 'mt-3 text-sm font-medium text-red-600';
+                        feedbackElement.style.color = '#2f855a'; // Verde
+                    } else { // Si la respuesta es incorrecta
+                        feedbackElement.textContent = `Incorrecto. La respuesta es: ${q.answer}.`;
+                        feedbackElement.style.color = 'var(--color-accent)'; // Rojo
                     }
-                } else {
+                } else { // Si no se ha respondido
                     feedbackElement.textContent = "No has respondido esta pregunta.";
-                    feedbackElement.className = 'mt-3 text-sm font-medium text-amber-600';
+                    feedbackElement.style.color = '#b7791f'; // Amarillo oscuro
                 }
             });
+
+            // Mostrar el resultado final
             quizResult.textContent = `Has acertado ${score} de ${quizData.length} preguntas.`;
             if (score === quizData.length) {
-                 quizResult.innerHTML += " <span class='text-2xl'>🎉</span> ¡Enhorabuena, eres un experto en palancas!";
-                 quizResult.className = 'mt-6 text-center text-xl font-semibold text-green-700';
+                 quizResult.innerHTML += " <br>🎉 ¡Enhorabuena, eres un experto en palancas!";
             } else if (score >= quizData.length / 2) {
-                quizResult.innerHTML += " <span class='text-2xl'>😊</span> ¡Buen trabajo! Sigue practicando.";
-                quizResult.className = 'mt-6 text-center text-xl font-semibold text-sky-700';
+                quizResult.innerHTML += " <br>😊 ¡Buen trabajo! Sigue practicando.";
             } else {
-                quizResult.innerHTML += " <span class='text-2xl'>🤔</span> ¡Ánimo! Repasa un poco más y lo conseguirás.";
-                quizResult.className = 'mt-6 text-center text-xl font-semibold text-amber-700';
+                quizResult.innerHTML += " <br>🤔 ¡Ánimo! Repasa un poco más y lo conseguirás.";
             }
         }
 
-        // Cargar el quiz cuando la página esté lista
+        // Cargar el quiz cuando el DOM esté listo.
         document.addEventListener('DOMContentLoaded', cargarQuiz);
 
     </script>
