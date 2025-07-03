@@ -197,6 +197,22 @@
             padding: 1rem;
             border: 2px dashed;
         }
+        
+        /* --- ESTILOS PARA EL DIAGRAMA DE LA LEY DE LA PALANCA --- */
+        #lever-law-diagram-container {
+            text-align: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: white;
+            border: 1px solid var(--color-primary);
+        }
+        
+        #lever-law-diagram-container svg text {
+            font-family: var(--font-body);
+            font-size: 14px;
+            fill: var(--color-text);
+        }
+
 
         /* --- SECCIÓN DE TIPOS DE PALANCA (TARJETAS) --- */
         .types-grid {
@@ -429,6 +445,39 @@
                 <li><b>Brazo de Potencia (BP):</b> Distancia desde el apoyo hasta donde se aplica la potencia.</li>
                 <li><b>Brazo de Resistencia (BR):</b> Distancia desde el apoyo hasta la resistencia.</li>
             </ul>
+
+            <!-- DIAGRAMA DINÁMICO DE LA LEY DE LA PALANCA -->
+            <div id="lever-law-diagram-container">
+                <svg viewBox="0 0 400 130" aria-labelledby="diagram-title">
+                    <title id="diagram-title">Diagrama interactivo de la ley de la palanca.</title>
+                    <!-- Barra de la palanca -->
+                    <line x1="10" y1="50" x2="390" y2="50" stroke="var(--color-primary)" stroke-width="5" />
+                    <!-- Fulcro (Apoyo) -->
+                    <path d="M 200 50 L 190 70 L 210 70 Z" fill="var(--color-primary)" />
+                    <text x="195" y="85" font-size="14">A</text>
+            
+                    <!-- Potencia (P) -->
+                    <line x1="50" y1="50" x2="50" y2="80" stroke="var(--color-primary)" stroke-width="2" />
+                    <path d="M 45 80 L 50 90 L 55 80 Z" fill="var(--color-primary)" />
+                    <text id="p-value" x="48" y="110" text-anchor="middle">P</text>
+            
+                    <!-- Resistencia (R) -->
+                    <line x1="350" y1="50" x2="350" y2="80" stroke="var(--color-accent)" stroke-width="2" />
+                    <path d="M 345 80 L 350 90 L 355 80 Z" fill="var(--color-accent)" />
+                    <text id="r-value" x="350" y="110" text-anchor="middle">R</text>
+            
+                    <!-- Brazo de Potencia (BP) -->
+                    <line x1="50" y1="35" x2="200" y2="35" stroke="#555" stroke-width="1"/>
+                    <line x1="50" y1="30" x2="50" y2="40" stroke="#555" stroke-width="1"/>
+                    <line x1="200" y1="30" x2="200" y2="40" stroke="#555" stroke-width="1"/>
+                    <text id="bp-value" x="125" y="28" text-anchor="middle">BP</text>
+            
+                    <!-- Brazo de Resistencia (BR) -->
+                    <line x1="200" y1="35" x2="350" y2="35" stroke="#555" stroke-width="1"/>
+                    <line x1="350" y1="30" x2="350" y2="40" stroke="#555" stroke-width="1"/>
+                    <text id="br-value" x="275" y="28" text-anchor="middle">BR</text>
+                </svg>
+            </div>
             
             <h3>Calculadora de la Ley</h3>
             <div style="background-color: var(--color-bg-main); padding: 1.5rem; border:2px solid var(--color-primary);">
@@ -436,19 +485,19 @@
                 <div class="form-grid">
                     <div>
                         <label for="potencia">Potencia (P) en Newtons (N):</label>
-                        <input type="number" id="potencia">
+                        <input type="number" id="potencia" oninput="actualizarDiagramaLey()">
                     </div>
                     <div>
                         <label for="brazoPotencia">Brazo de Potencia (BP) en metros (m):</label>
-                        <input type="number" id="brazoPotencia">
+                        <input type="number" id="brazoPotencia" oninput="actualizarDiagramaLey()">
                     </div>
                     <div>
                         <label for="resistencia">Resistencia (R) en Newtons (N):</label>
-                        <input type="number" id="resistencia">
+                        <input type="number" id="resistencia" oninput="actualizarDiagramaLey()">
                     </div>
                     <div>
                         <label for="brazoResistencia">Brazo de Resistencia (BR) en metros (m):</label>
-                        <input type="number" id="brazoResistencia">
+                        <input type="number" id="brazoResistencia" oninput="actualizarDiagramaLey()">
                     </div>
                 </div>
                 <button onclick="calcularLeyPalanca()" class="btn">Calcular Valor Faltante</button>
@@ -484,59 +533,62 @@
          * @param {string} tabId - El ID del div de contenido de la pestaña a mostrar.
          */
         function showTab(tabId) {
-            // Obtener todos los botones y contenidos de las pestañas
             const tabContents = document.querySelectorAll('.tab-content');
             const tabButtons = document.querySelectorAll('.tab-button');
 
-            // Ocultar todos los contenidos de las pestañas
             tabContents.forEach(content => {
                 content.classList.remove('active');
             });
-            // Quitar el estilo activo de todos los botones
             tabButtons.forEach(button => {
                 button.classList.remove('active-tab');
             });
 
-            // Mostrar el contenido de la pestaña seleccionada
             document.getElementById(tabId).classList.add('active');
-            // Añadir el estilo activo al botón correspondiente
             const activeButton = document.querySelector(`button[onclick="showTab('${tabId}')"]`);
             activeButton.classList.add('active-tab');
         }
         
-        // Al cargar la página, mostrar la primera pestaña por defecto.
         showTab('introduccion');
 
-        // --- LÓGICA PARA LA CALCULADORA DE LA LEY DE LA PALANCA ---
+        // --- LÓGICA PARA LA CALCULADORA Y EL DIAGRAMA DE LA LEY DE LA PALANCA ---
         
         /**
+         * Actualiza las etiquetas del diagrama SVG con los valores de los inputs.
+         */
+        function actualizarDiagramaLey() {
+            const pVal = document.getElementById('potencia').value;
+            const bpVal = document.getElementById('brazoPotencia').value;
+            const rVal = document.getElementById('resistencia').value;
+            const brVal = document.getElementById('brazoResistencia').value;
+
+            document.getElementById('p-value').textContent = pVal ? `${pVal} N` : 'P';
+            document.getElementById('bp-value').textContent = bpVal ? `${bpVal} m` : 'BP';
+            document.getElementById('r-value').textContent = rVal ? `${rVal} N` : 'R';
+            document.getElementById('br-value').textContent = brVal ? `${brVal} m` : 'BR';
+        }
+
+        /**
          * Calcula el valor faltante (P, BP, R o BR) en la fórmula de la palanca.
-         * Requiere que exactamente tres de los cuatro campos estén llenos.
          */
         function calcularLeyPalanca() {
-            // Obtener los valores de los inputs y convertirlos a número (o NaN si están vacíos)
             const P = parseFloat(document.getElementById('potencia').value);
             const BP = parseFloat(document.getElementById('brazoPotencia').value);
             const R = parseFloat(document.getElementById('resistencia').value);
             const BR = parseFloat(document.getElementById('brazoResistencia').value);
             const resultadoEl = document.getElementById('resultadoCalculadora');
 
-            // Contar cuántos campos tienen un valor numérico válido
             let count = [P, BP, R, BR].filter(val => !isNaN(val)).length;
 
-            // Validar que se hayan introducido exactamente 3 valores
             if (count !== 3) {
                 resultadoEl.textContent = 'Por favor, introduce exactamente tres valores.';
-                resultadoEl.style.color = 'var(--color-accent)'; // Rojo para error
+                resultadoEl.style.color = 'var(--color-accent)';
                 resultadoEl.style.borderColor = 'var(--color-accent)';
                 return;
             }
 
-            // Si la validación es correcta, preparar el mensaje de éxito
-            resultadoEl.style.color = 'var(--color-primary)'; // Azul para éxito
+            resultadoEl.style.color = 'var(--color-primary)';
             resultadoEl.style.borderColor = 'var(--color-primary)';
             
-            // Calcular el valor faltante basándose en cuál campo está vacío (isNaN)
             if (isNaN(P)) {
                 const result = (R * BR) / BP;
                 document.getElementById('potencia').value = result.toFixed(2);
@@ -554,10 +606,10 @@
                 document.getElementById('brazoResistencia').value = result.toFixed(2);
                 resultadoEl.textContent = `El Brazo de Resistencia (BR) es ${result.toFixed(2)} m.`;
             }
+            actualizarDiagramaLey(); // Actualizar diagrama tras el cálculo
         }
 
         // --- LÓGICA PARA EL QUIZ ---
-        // Datos de las preguntas del quiz
         const quizData = [
             {
                 question: "¿Qué tipo de palanca es un balancín de parque?",
@@ -583,31 +635,48 @@
                 question: "En las palancas de SEGUNDO género, el Brazo de Potencia (BP) es siempre...",
                 options: ["Menor que el Brazo de Resistencia (BR)", "Igual que el Brazo de Resistencia (BR)", "Mayor que el Brazo de Resistencia (BR)"],
                 answer: "Mayor que el Brazo de Resistencia (BR)"
+            },
+            {
+                question: "En las palancas de TERCER género, la fuerza que aplicamos (Potencia) es siempre...",
+                options: ["Menor que la Resistencia", "Igual que la Resistencia", "Mayor que la Resistencia"],
+                answer: "Mayor que la Resistencia"
+            },
+            {
+                question: "Un abrebotellas es un ejemplo clásico de palanca de...",
+                options: ["Primer Género", "Segundo Género", "Tercer Género", "Cuarto Género"],
+                answer: "Segundo Género"
+            },
+            {
+                question: "El punto fijo sobre el que gira una palanca se llama...",
+                options: ["Potencia", "Resistencia", "Brazo", "Fulcro o Apoyo"],
+                answer: "Fulcro o Apoyo"
+            },
+            {
+                question: "Si aplicas una fuerza (P) muy lejos del apoyo, ¿qué necesitas para levantar una resistencia (R)?",
+                options: ["Más fuerza", "Menos fuerza", "La misma fuerza", "Es imposible saberlo"],
+                answer: "Menos fuerza"
+            },
+            {
+                question: "El brazo humano, al levantar un objeto, funciona principalmente como una palanca de...",
+                options: ["Primer Género", "Segundo Género", "Tercer Género", "No es una palanca"],
+                answer: "Tercer Género"
             }
         ];
 
         const quizContainer = document.getElementById('quizContainer');
         const quizResult = document.getElementById('quizResult');
 
-        /**
-         * Genera dinámicamente el HTML para las preguntas del quiz
-         * a partir del array 'quizData'.
-         */
         function cargarQuiz() {
-            quizContainer.innerHTML = ''; // Limpiar por si se recarga
+            quizContainer.innerHTML = '';
             quizData.forEach((q, index) => {
-                // Crear el contenedor para cada pregunta
                 const questionElement = document.createElement('div');
                 questionElement.className = 'quiz-question';
                 
-                // Añadir el texto de la pregunta
                 questionElement.innerHTML = `<p><strong>${index + 1}. ${q.question}</strong></p>`;
 
-                // Crear el contenedor para las opciones
                 const optionsContainer = document.createElement('div');
                 optionsContainer.className = 'quiz-options';
 
-                // Crear los botones de radio para cada opción
                 q.options.forEach(option => {
                     optionsContainer.innerHTML += `
                         <label>
@@ -619,20 +688,15 @@
                 
                 questionElement.appendChild(optionsContainer);
                 
-                // Añadir un elemento para mostrar la retroalimentación (correcto/incorrecto)
                 const feedbackElement = document.createElement('p');
                 feedbackElement.id = `feedback${index}`;
-                feedbackElement.className = 'feedback'; // Clase para estilo
+                feedbackElement.className = 'feedback';
                 questionElement.appendChild(feedbackElement);
 
                 quizContainer.appendChild(questionElement);
             });
         }
 
-        /**
-         * Revisa las respuestas del quiz, muestra la retroalimentación para cada pregunta
-         * y calcula la puntuación final.
-         */
         function mostrarResultadosQuiz() {
             let score = 0;
             quizData.forEach((q, index) => {
@@ -640,22 +704,20 @@
                 const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
                 
                 if (selectedOption) {
-                    // Si la respuesta es correcta
                     if (selectedOption.value === q.answer) {
                         score++;
                         feedbackElement.textContent = "¡Correcto! 👍";
-                        feedbackElement.style.color = '#2f855a'; // Verde
-                    } else { // Si la respuesta es incorrecta
+                        feedbackElement.style.color = '#2f855a';
+                    } else {
                         feedbackElement.textContent = `Incorrecto. La respuesta es: ${q.answer}.`;
-                        feedbackElement.style.color = 'var(--color-accent)'; // Rojo
+                        feedbackElement.style.color = 'var(--color-accent)';
                     }
-                } else { // Si no se ha respondido
+                } else {
                     feedbackElement.textContent = "No has respondido esta pregunta.";
-                    feedbackElement.style.color = '#b7791f'; // Amarillo oscuro
+                    feedbackElement.style.color = '#b7791f';
                 }
             });
 
-            // Mostrar el resultado final
             quizResult.textContent = `Has acertado ${score} de ${quizData.length} preguntas.`;
             if (score === quizData.length) {
                  quizResult.innerHTML += " <br>🎉 ¡Enhorabuena, eres un experto en palancas!";
@@ -666,8 +728,14 @@
             }
         }
 
-        // Cargar el quiz cuando el DOM esté listo.
-        document.addEventListener('DOMContentLoaded', cargarQuiz);
+        // Al cargar el DOM, inicializar el Quiz y el diagrama
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarQuiz();
+            // Solo inicializar el diagrama si la pestaña 'ley' está presente
+            if(document.getElementById('ley')) {
+                actualizarDiagramaLey();
+            }
+        });
 
     </script>
 
